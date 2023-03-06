@@ -63,7 +63,7 @@ async def listen(myip):
         line = data.decode().rstrip()
         if line:
             hello_message = json.loads(line)
-            print(hello_message['message'])
+            
             if hello_message.get('type') == 'hello':
                 try:
                     ip_dict[hello_message['myname']] = hello_message['myip']
@@ -77,6 +77,8 @@ async def listen(myip):
                     )
                 except KeyError:
                     pass
+            elif hello_message.get('type') == 'message':
+                print(hello_message['message'])
 
 
 async def send_hello(myip):
