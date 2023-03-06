@@ -52,18 +52,17 @@ async def send_hello_to_ip(ip, myip):
 
 
 async def listen(myip):
-    proc = await asyncio.create_subprocess_exec(
-        'nc', '-lk', '12345',
-        stdout=asyncio.subprocess.PIPE,
-        stdin=asyncio.subprocess.PIPE
-    )
-
     while True:
+        proc = await asyncio.create_subprocess_exec(
+            'nc', '-l', '12345',
+            stdout=asyncio.subprocess.PIPE,
+            stdin=asyncio.subprocess.PIPE
+        )
         data = await proc.stdout.readline()
         line = data.decode().rstrip()
         if line:
             hello_message = json.loads(line)
-            
+
             if hello_message.get('type') == 'hello':
                 try:
                     ip_dict[hello_message['myname']] = hello_message['myip']
