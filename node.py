@@ -82,7 +82,6 @@ async def listen(myip):
             elif hello_message.get('type') == 'message':
                 try:
                     await aioconsole.aprint(hello_message['myip'], ':', hello_message['content'])
-                    await aioconsole.aprint('got message')
                 except KeyError:
                     pass
 
@@ -118,7 +117,6 @@ async def send_message():
     }
     ) + '\n').encode()
     )
-    await aioconsole.aprint('sent message')
     try:
         await asyncio.wait_for(proc.wait(), timeout=5)
     except asyncio.exceptions.TimeoutError:
