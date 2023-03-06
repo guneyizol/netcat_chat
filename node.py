@@ -116,7 +116,7 @@ async def send_message():
     ) + '\n').encode()
     )
     print('sent message')
-    await asyncio.sleep(3)
+    await proc.wait()
 
 
 async def control():
