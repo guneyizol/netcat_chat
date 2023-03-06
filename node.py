@@ -49,7 +49,6 @@ async def send_hello_to_ip(ip, myip):
                         proc.terminate()  # if there is a connection, close it
         except asyncio.exceptions.TimeoutError:
             proc.terminate()  # if there is a connection, close it
-        
 
 
 async def listen(myip):
@@ -111,12 +110,16 @@ async def send_message():
     }
     ) + '\n').encode()
     )
+    try:
+        await asyncio.wait_for(proc.stdout.readline(), timeout=3)
+    except asyncio.exceptions.TimeoutError:
+        proc.terminate()
 
 
 async def control():
     key = await aioconsole.ainput('To send a message, press M\n'
-                                      'To see the available recipient IPs, press A\n'
-                                      'To exit, press E\n')
+                                  'To see the available recipient IPs, press A\n'
+                                  'To exit, press E\n')
     while True:
         key = key.lower()
         if key == 'm':
@@ -131,7 +134,7 @@ async def control():
                 print(f'{name}: {ip}')
         elif key == 'e':
             sys.exit(0)
-        
+
         key = await aioconsole.ainput()
 
 
