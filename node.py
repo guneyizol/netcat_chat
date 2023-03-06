@@ -45,19 +45,19 @@ async def send_hello_to_ip(ip, myip):
                         ] = hello_message['myip']
                     except KeyError:  # ignore invalid responses
                         pass
-                    finally:
-                        proc.terminate()  # if there is a connection, close it
         except asyncio.exceptions.TimeoutError:
-            proc.terminate()  # if there is a connection, close it
+            pass
+
+        proc.wait()
 
 
 async def listen(myip):
+    proc = await asyncio.create_subprocess_exec(
+        'nc', '-lk', '12345',
+        stdout=asyncio.subprocess.PIPE,
+        stdin=asyncio.subprocess.PIPE
+    )
     while True:
-        proc = await asyncio.create_subprocess_exec(
-            'nc', '-l', '12345',
-            stdout=asyncio.subprocess.PIPE,
-            stdin=asyncio.subprocess.PIPE
-        )
         data = await proc.stdout.readline()
         line = data.decode().rstrip()
         if line:
