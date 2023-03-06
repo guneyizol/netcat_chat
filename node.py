@@ -142,6 +142,9 @@ async def main():
     global myip
     myip = await aioconsole.ainput('Enter your ip: ')
 
+    global myname
+    myname = await aioconsole.input('Enter your name: ')
+    
     listen_task = asyncio.create_task(listen(myip))
     hello_task = asyncio.create_task(send_hello(myip))
     control_task = asyncio.create_task(control())
