@@ -48,7 +48,10 @@ async def send_hello_to_ip(ip, myip):
         except asyncio.exceptions.TimeoutError:
             pass
 
-        await proc.wait()
+        try:
+            await asyncio.wait_for(proc.wait(), timeout=5)
+        except asyncio.exceptions.TimeoutError:
+            proc.kill()
 
 
 async def listen(myip):
@@ -116,7 +119,10 @@ async def send_message():
     ) + '\n').encode()
     )
     await aioconsole.aprint('sent message')
-    await proc.wait()
+    try:
+        await asyncio.wait_for(proc.wait(), timeout=5)
+    except asyncio.exceptions.TimeoutError:
+        proc.kill()
 
 
 async def control():
