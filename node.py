@@ -78,7 +78,10 @@ async def listen(myip):
                 except KeyError:
                     pass
             elif hello_message.get('type') == 'message':
-                print(hello_message['message'])
+                try:
+                    print(hello_message['content'])
+                except KeyError:
+                    pass
 
 
 async def send_hello(myip):
