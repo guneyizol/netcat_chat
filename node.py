@@ -79,7 +79,7 @@ async def listen(myip):
             elif hello_message.get('type') == 'message':
                 try:
                     await aioconsole.aprint(hello_message['myip'], ':', hello_message['content'])
-                    print('got message')
+                    await aioconsole.aprint('got message')
                 except KeyError:
                     pass
 
@@ -115,7 +115,7 @@ async def send_message():
     }
     ) + '\n').encode()
     )
-    print('sent message')
+    await aioconsole.aprint('sent message')
     await proc.wait()
 
 
@@ -127,14 +127,14 @@ async def control():
         key = key.lower()
         if key == 'm':
             if not ip_dict:
-                print('There are no available recipients. Try later.')
+                await aioconsole.aprint('There are no available recipients. Try later.')
             else:
                 await asyncio.create_task(send_message())
         elif key == 'a':
             if not ip_dict:
-                print('There are no available recipients.')
+                await aioconsole.aprint('There are no available recipients.')
             for name, ip in ip_dict.items():
-                print(f'{name}: {ip}')
+                await aioconsole.aprint(f'{name}: {ip}')
         elif key == 'e':
             sys.exit(0)
 
