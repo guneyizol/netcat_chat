@@ -79,7 +79,7 @@ async def listen(myip):
                     pass
             elif hello_message.get('type') == 'message':
                 try:
-                    print(hello_message['content'])
+                    await aioconsole.aprint(hello_message['content'])
                 except KeyError:
                     pass
 
