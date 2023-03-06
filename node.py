@@ -78,7 +78,7 @@ async def listen(myip):
                     pass
             elif hello_message.get('type') == 'message':
                 try:
-                    await aioconsole.aprint(hello_message['content'])
+                    await aioconsole.aprint(hello_message['myip'], ':', hello_message['content'])
                     print('got message')
                 except KeyError:
                     pass
