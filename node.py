@@ -48,7 +48,7 @@ async def send_hello_to_ip(ip, myip):
         except asyncio.exceptions.TimeoutError:
             pass
 
-        proc.wait()
+        await proc.wait()
 
 
 async def listen(myip):
