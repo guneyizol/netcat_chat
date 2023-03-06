@@ -27,7 +27,7 @@ async def send_hello_to_ip(ip, myip):
 
         proc.stdin.write((json.dumps({
             'type': 'hello',
-            'myname': 'guney',
+            'myname': myname,
             'myip': myip
         }
         ) + '\n').encode()
@@ -63,14 +63,14 @@ async def listen(myip):
         line = data.decode().rstrip()
         if line:
             hello_message = json.loads(line)
-            print(hello_message)
+            print(hello_message['message'])
             if hello_message.get('type') == 'hello':
                 try:
                     ip_dict[hello_message['myname']] = hello_message['myip']
                     proc.stdin.write(
                         (json.dumps({
                             'type': 'aleykumselam',
-                            'myname': 'guney',
+                            'myname': myname,
                             'myip': myip
                         }
                         ) + '\n').encode()
