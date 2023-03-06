@@ -82,7 +82,7 @@ async def listen(myip):
 async def send_hello(myip):
     while True:
         task_list = []
-        for i in range(2, 12):
+        for i in range(2, 256):
             ip = '192.168.1.' + str(i)
 
             if ip != myip:
